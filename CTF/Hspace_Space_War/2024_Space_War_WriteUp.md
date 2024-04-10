@@ -1,4 +1,7 @@
-# 2024 Space War Write-Up
+---
+layout: simple
+title: 2024 Space War Write-up
+---
 
 - 이름: 정지민
 - 닉네임: mini_chip
