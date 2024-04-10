@@ -11,7 +11,7 @@ url: https://github.com/EinHungerkuenstler/EinHungerkuenstler.github.io # the ba
 permalink: /:year-:month/:title
 timezone: GMT+1
 
-favicon: /assets/img/favicon.ico
+favicon: /assets/img/profile.png
 
 google_analytics: #UA—XXXXXXXX-X
 disqus_shortname: #disqus shortname
