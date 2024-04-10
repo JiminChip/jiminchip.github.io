@@ -11,6 +11,6 @@ order: 3
 
 ### [Hspace Space War (2024.01.27)](/CTF/Hspace_Space_War/2024_Space_War_WriteUp)
 
-### [bi0s CTF 2024](https://www.notion.so/bi0s-CTF-2024-49d945b9ecc7438897aa8411f1a4e6df?pvs=21)
+### [bi0s CTF 2024](https://mini-chip.notion.site/bi0s-CTF-2024-49d945b9ecc7438897aa8411f1a4e6df?pvs=4)
 
-### [KalmarCTF](https://www.notion.so/KalmarCTF-7fc25ce154544f21aaddcc552d4f3e3a?pvs=21)
+### [KalmarCTF](/CTF/Kalmar_CTF/KalmarCTF)
