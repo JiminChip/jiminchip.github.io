@@ -7,7 +7,7 @@ baseurl:  # the subpath of the site
 url: https://github.com/JiminChip/jiminchip.github.io # the base hostname & protocol for your site
 
 permalink: /:year-:month/:title
-timezone: GMT+1
+timezone: KST
 
 favicon: /assets/img/profile.png
 
@@ -39,9 +39,6 @@ defaults:
 collections:
   additional_pages:
     output: true
-
-categories:
-  CTF
 
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: kramdown 
