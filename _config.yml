@@ -21,7 +21,7 @@ user:
   pic: /assets/img/profile.jpg
   picAlt: "Cute Anonymous_ikm"
   job: Aspiring hackers
-  #aboutme: true # comment this out if you don't need the 'about' page.
+  # aboutme: /Notion # comment this out if you don't need the 'about' page.
 
 exclude:
   - README.md
@@ -39,6 +39,9 @@ defaults:
 collections:
   additional_pages:
     output: true
+
+categories:
+  CTF
 
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: kramdown 
