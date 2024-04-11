@@ -1,6 +1,7 @@
 ---
-layout: simple
 title: 2024 Space War Write-up
+categories: CTF
+comment: true
 ---
 
 - 이름: 정지민

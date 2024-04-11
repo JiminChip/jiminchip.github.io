@@ -1,6 +1,12 @@
 ---
-layout: simple
+layout: post
 title: Symmetry 1
+date: April 11, 2024
+categories: CTF
+comment: true
+---
+**상위 디렉토리 -** [Kalmar CTF 2024](/2024-04/KalmarCTF)
+
 ---
 
 This is one of ransomware type challenges.

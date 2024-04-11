@@ -5,7 +5,9 @@ date: April 11, 2024
 categories: CTF
 comment: true
 ---
-`상위 포스트 - `[bi0s CTF 2024](/2024-04/bi0s_CTF_2024)
+**상위 포스트 -** [bi0s CTF 2024](/2024-04/bi0s_CTF_2024)
+
+---
 
 이름: 정지민
 

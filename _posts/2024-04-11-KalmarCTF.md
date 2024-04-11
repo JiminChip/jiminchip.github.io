@@ -1,9 +1,7 @@
 ---
-layout: post
 title: 2024 Kalmar CTF
-date: April 11, 2024
 categories: CTF
-comment: 2024 Kalmar CTF write-ups
+comment: true
 ---
 
 I participated in KalmarCTF as a member of CyKor.

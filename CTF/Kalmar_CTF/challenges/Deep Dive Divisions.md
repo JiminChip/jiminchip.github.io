@@ -1,6 +1,12 @@
 ---
-layout: simple
+layout: post
 title: Deep Dive Divisions
+date: April 11, 2024
+categories: CTF
+comment: true
+---
+**상위 디렉토리 -** [Kalmar CTF 2024](/2024-04/KalmarCTF)
+
 ---
 
 This challenge is a vm challenge. While this may seem simple on the surface, as the decompiled code ends up being less than 150 lines, it’s not as easy a challenge as you might think…
