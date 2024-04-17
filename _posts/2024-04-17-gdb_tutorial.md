@@ -255,8 +255,6 @@ step into는 call 명령어에서 해당 함수 내부로 들어가라는 의미
 
 이렇게 보면 `ni` (step over)가 조금 직관적으로 이해가 되시죠?
 
-**이게 `ni`의 경우에는 call 밑의 줄에 bp를 거는 것과 동일한 효과를 불러옵니다.** 나중에 pwnable을 하시거나 난독화된 바이너리를 분석할 때 위 개념은 중요하게 작용할 수 있습니다.
-
 ![Untitled](/HackingTips/Reversing/gdb_tutorial/Untitled%2015.png)
 
 `si` 의 경우에는 함수 내부로 들어와 집니다.
