@@ -21,7 +21,7 @@ comment: true
 
 [Gathering Information 2](#gathering-information-2)
 
-[&emsp;Random to Source of password & session id](#random-to-source-of-password--session-id)
+[&emsp;Random to Source of password & session id (삽질 2)](#random-to-source-of-password--session-id)
 
 [&emsp;Captcha genstring](#captcha-genstring)
 
@@ -283,7 +283,7 @@ Session ID와 Password 모두 동일한 소스를 기반으로 생성됩니다. 
 
 ## Gathering Information 2
 
-### Random to Source of password & session id
+### Random to Source of password & session id (삽질 2)
 
 지금까지 분석한 정보로는 Password를 얻기 불가능하다는 판단 하에 더 많은 정보를 수집해야 했습니다.
 
