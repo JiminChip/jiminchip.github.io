@@ -17,6 +17,8 @@ LOG = False
 
 ######################################
 
+def slog(n, m): return success(": ".join([n, hex(m)]))
+
 def connect():
     global p, e, libc
     e = ELF("./prob")
