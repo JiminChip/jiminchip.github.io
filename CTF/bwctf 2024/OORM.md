@@ -13,6 +13,16 @@ comment: true
 
 ## Table of Content
 
+[Overall Control Flow](#overall-control-flow)
+
+[Deobfuscation - Control Flow Flattening](#deobfuscation---control-flow-flattening)
+
+[Idea for Get Flag](#idea-for-get-flag)
+
+[Parsing](#parse-code)
+
+[Solver and Get Flag](#solver-and-get-flag)
+
 ## Overall Control Flow
 
 If I initially put in a 100-digit hex input, it will convert to binary and store a 400-bit value.
