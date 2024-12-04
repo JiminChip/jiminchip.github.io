@@ -1,12 +1,26 @@
 ---
 title: gdb script (Python API)
-categories: Tips-Reversing
+categories: CyKor-Seminar
 comment: true
 ---
 
 디버깅을 자동화 시킬 수 있도록 gdb는 script 기능을 제공합니다. python 모듈 형태로 사용이 가능하기 때문에 편리하면서도 강력한 기능들을 사용할 수 있습니다.
 
 기본적으로 `import gdb`를 통해 import한 뒤, 실행할 때는 `gdb -x <script.py>` 형태로 실행할 수 있습니다.
+
+
+**Index**
+
+[gdb.execute](#gdbexecute)
+
+[gdb.parse_and_eval](#gdbparse_and_eval)
+
+[gdb.Breakpoint](#gdbbreakpoint)
+
+[gdb.selected_inferior](#gdbselected_inferior)
+
+[gdb script 예제](#gdb-script-예제)
+
 
 ### gdb.execute
 

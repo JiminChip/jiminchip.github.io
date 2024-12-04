@@ -1,6 +1,6 @@
 ---
 title: 1 byte brute-force (ver. gdbscript)
-categories: Tips-SkeletonCode
+categories: Skeleton-Code
 comment: true
 ---
 

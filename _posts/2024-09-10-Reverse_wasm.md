@@ -1,6 +1,6 @@
 ---
 title: Reverse .wasm file
-categories: Tips-Reversing
+categories: Hacking-Tips
 comment: true
 ---
 

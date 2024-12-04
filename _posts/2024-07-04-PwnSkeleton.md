@@ -1,6 +1,6 @@
 ---
 title: Pwnable Exploit Skeleton Code
-categories: Tips-SkeletonCode
+categories: Skeleton-Code
 comment: true
 ---
 

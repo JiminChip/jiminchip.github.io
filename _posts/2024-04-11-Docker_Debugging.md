@@ -1,6 +1,6 @@
 ---
 title: Docker Debugging (Remote debugging & patchelf)
-categories: Tips-Pwnable
+categories: Hacking-Tips
 comment: true
 ---
 

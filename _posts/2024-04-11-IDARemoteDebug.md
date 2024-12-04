@@ -1,6 +1,6 @@
 ---
 title: IDA Remote Debugging (linux debugger & gdb)
-categories: Tips-Reversing
+categories: Hacking-Tips
 comment: true
 ---
 

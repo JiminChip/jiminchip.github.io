@@ -1,6 +1,6 @@
 ---
 title: C rand() in Python
-categories: Tips-Reversing
+categories: Hacking-Tips
 comment: true
 ---
 

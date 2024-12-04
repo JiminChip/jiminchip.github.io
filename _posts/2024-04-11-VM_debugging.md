@@ -1,6 +1,6 @@
 ---
 title: VM_debugging (ver. gdbscript)
-categories: Tips-SkeletonCode
+categories: Skeleton-Code
 comment: true
 ---
 

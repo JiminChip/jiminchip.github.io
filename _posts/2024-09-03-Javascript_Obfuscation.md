@@ -1,6 +1,6 @@
 ---
 title: Javascript Obfuscation
-categories: Tips-Reversing
+categories: Hacking-Tips
 comment: true
 ---
 
