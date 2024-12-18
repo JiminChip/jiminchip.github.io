@@ -35,8 +35,14 @@ CyKor - KU hacking club & hacking team
 
 DEFCON 32 Finalist (Team. Cold Fusion)
 
+Blue Water CTF 2024 2nd (Team. CyKor)
+
+LG Uplus CTF 2024 2nd (Team. roKyC)
+
+Lake CTF 24-25 Finalist (Team. CyKor)
+
 ---
 
 I'm studying reverse engineering, and I'm also interested in system hacking. My goal is to become an all-rounder with a certain level of knowledge and skills in all four fields of system hacking, reverse engineering, web hacking, and cryptography by the time I graduate from university.
 
-I enjoy wargaming, mostly on a site [DreamHack](https://dreamhack.io), and I'm a member of Team CyKor, participating in various CTFs to gain experience. Here is my DreamHack user [link](https://dreamhack.io/users/25740).
+I enjoy wargaming, mostly on a site called [Dreamhack](http://dreamhack.io), and I'm a member of Team CyKor, participating in various CTFs to gain experience. Here is my DreamHack user [link](https://dreamhack.io/users/25740).
