@@ -33,6 +33,8 @@ CyKor - KU hacking club & hacking team
 
 ### Career
 
+Theori - Dreamhack Content Intern Researcher (2025.03~)
+
 DEFCON 32 Finalist (Team. Cold Fusion)
 
 Blue Water CTF 2024 2nd (Team. CyKor)

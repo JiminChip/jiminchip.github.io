@@ -7,7 +7,7 @@ baseurl:  # the subpath of the site
 url: https://github.com/JiminChip/jiminchip.github.io # the base hostname & protocol for your site
 
 permalink: /:year-:month/:title
-timezone: KST
+timezone: Asia/Seoul
 
 favicon: /assets/img/profile.png
 
