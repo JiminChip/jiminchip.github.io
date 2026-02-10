@@ -33,28 +33,44 @@ CyKor - KU hacking club & hacking team
 
 ### Career
 
-Theori - Dreamhack Content Intern Researcher (2025.03~)
-
-DEFCON 32 Finalist (Team. Cold Fusion)
-
-Blue Water CTF 2024 2nd (Team. CyKor)
-
-LG Uplus CTF 2024 2nd (Team. roKyC)
-
-Lake CTF 24-25 Finalist (Team. CyKor)
-
-R3CTF 7th (Team. CyKor)
-
-UIUCTF 7th (Team. CyKor)
-
-DEFCON 33 Finalist (Team. Cold Fusion)
-
-CCE 2025 Finalist (Team. 초코민트 요리모 미니칩)
-
-HITCON 2025 4th (Team. CTF Demon Hunter)
+- Theori — Dreamhack Content Intern Researcher (2025.03 ~)
 
 ---
 
-I'm studying reverse engineering, and I'm also interested in system hacking. My goal is to become an all-rounder with a certain level of knowledge and skills in all four fields of system hacking, reverse engineering, web hacking, and cryptography by the time I graduate from university.
+### CTF Achievements
+
+**Highlights**
+
+- DEFCON 32 — Finalist (Team. Cold Fusion)
+
+- DEFCON 33 — Finalist (Team. Cold Fusion)
+
+- HITCON 2025 — 4th (Team. CTF Demon Hunter) 
+
+- Blue Water CTF 2024 — 2nd (Team. CyKor)
+
+**Placements**
+
+- CCE 2025 — 2nd (General Division) (Team. 초코민트 요리모 미니칩)
+
+- Whitehat Contest 2025 — 1st (University Division) (Team. 무관탈출넘버원)
+
+- LG Uplus CTF 2024 — 2nd (Team. roKyC)
+
+- Lake CTF 24-25 — Finalist (Team. CyKor)
+
+- Lake CTF 25-26 — Finalist (Team. CyKor)
+
+- R3CTF 2025 — 7th (Team. CyKor)
+
+- UIUCTF 2025 — 7th (Team. CyKor)
+
+- and more
+
+---
+
+### Focus
+
+I primarily study reverse engineering, with a particular focus on obfuscation and code-concealment techniques—how to make programs harder to understand, analyze, and recover. I'm also occasionally interested in pwnable/system exploitation, and I've been thinking about ways to leverage unintended behaviors (e.g., vulnerability-driven behaviors) as building blocks for obfuscation or code-hiding designs.
 
 I enjoy wargaming, mostly on a site called [Dreamhack](http://dreamhack.io), and I'm a member of Team CyKor, participating in various CTFs to gain experience. Here is my Dreamhack user [link](https://dreamhack.io/users/25740).
