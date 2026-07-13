@@ -27,7 +27,7 @@ comment: true
 
 ## Overall Control Flow
 
-The program first converts a 100-digit hexadecimal input to binary and stores it as 400 bits.
+The program first converts a **100-digit hexadecimal input** to binary and stores it as **400 bits**.
 
 ```c
   do
@@ -63,17 +63,17 @@ The program first converts a 100-digit hexadecimal input to binary and stores it
   while ( v15 <= 799 );
 ```
 
-It then executes 800 functions.
+It then executes **800 functions**.
 
-Forty of those functions are validation routines, and all of them must pass.
+**Forty** of those functions are validation routines, and **all of them must pass**.
 
 The functions take a global value and an input value as their first two arguments, then store their result back in the global state.
 
 The 40 validation routines do not write results to global variables. Their missing global values are instead initialized by functions in `.init_array`.
 
-The arrays `&off_211CA0` and `&off_211020` each contain 400 functions, including 20 validation functions. Examining the data flow between these functions and the validation routines shows that the 400 input bits are arranged as a 20 × 20 grid.
+The arrays `&off_211CA0` and `&off_211020` each contain 400 functions, including 20 validation functions. Examining the data flow between these functions and the validation routines shows that the 400 input bits are arranged as a **20 × 20 grid**.
 
-`&off_211CA0` processes and validates columns, while `&off_211020` does the same for rows.
+`&off_211CA0` processes and validates **columns**, while `&off_211020` does the same for **rows**.
 
 The dispatcher does not obviously guarantee that functions execute in array order, so I wrote a GDB script to trace the control flow.
 
@@ -117,11 +117,11 @@ for i in range(800):
     ge("continue", to_string=True)
 ```
 
-The trace showed that the functions execute in array order. Although this might appear input-dependent, static analysis showed that the execution order is not easily changed.
+The trace showed that the functions **execute in array order**. Although this might appear input-dependent, static analysis showed that the execution order is not easily changed.
 
 ## Deobfuscation: Loop Unrolling
 
-The 800 functions initially look complex, but their structure is repetitive. This is not control-flow flattening: the code is primarily a loop-unrolled sequence of repeated arithmetic operations.
+The 800 functions initially look complex, but their structure is repetitive. **This is not control-flow flattening:** the code is primarily a **loop-unrolled sequence** of repeated arithmetic operations.
 
 After identifying the repeated pattern, I expressed the unrolled sequence as a regular loop and ported it to Python:
 
@@ -171,7 +171,7 @@ I ported one representative function and verified through debugging that its inp
 
 ## Strategy for Recovering the Flag
 
-With the main function and the behavior of all 800 routines understood, the remaining task was to recover an input that passed every check. After noticing that each validation uses only 20 input bits, I chose brute force. I could brute-force an individual solution for each validation routine and then use Z3 to combine them into a single input that satisfies every constraint.
+With the main function and the behavior of all 800 routines understood, the remaining task was to recover an input that passed every check. After noticing that **each validation uses only 20 input bits**, I chose brute force. I could brute-force an individual solution for each validation routine and then use **Z3 to combine them into a single input** that satisfies every constraint.
 
 To do this, I ported all routines from the binary. Their constants were hard-coded rather than stored in a table, so I parsed the code, extracted the constants, ported the routines to C, and brute-forced the individual checks in a reasonable amount of time.
 
@@ -179,7 +179,7 @@ I arrived at this strategy near the end of parsing, but brute force could also a
 
 ## Parsing the Code
 
-Parsing was difficult because the decompiled output did not compile cleanly and many multiplication operations had been replaced with left shifts. My parser handled about 680 of the 800 functions; I parsed the remaining roughly 120 by hand.
+Parsing was difficult because the decompiled output did not compile cleanly and many multiplication operations had been replaced with left shifts. My parser handled about **680 of the 800 functions**; I parsed the remaining roughly **120 by hand**.
 
 Before encountering multiplications expressed as shifts, I first tried parsing the disassembly.
 
@@ -338,7 +338,7 @@ f.close()
 
 Rather than continue refining the parser, I manually analyzed the functions it could not handle.
 
-The main risk of manual parsing is human error, and locating an error is expensive. To address that, I wrote a verification script.
+The main risk of manual parsing is **human error**, and locating an error is expensive. To address that, I wrote a **verification script**.
 
 The script collects each function's output for a given input through GDB, recomputes that output from the parsed representation, and compares the two.
 
@@ -492,7 +492,7 @@ When run, it lists the functions whose parsed behavior does not match the binary
 
 ## Solving and Recovering the Flag
 
-Once the routines were parsed, brute-forcing them was straightforward. The Python implementation took 15–20 minutes for one validation routine, so I reimplemented it in C rather than run all 40 checks in Python.
+Once the routines were parsed, brute-forcing them was straightforward. The Python implementation took **15–20 minutes for one validation routine**, so I reimplemented it in **C** rather than run all 40 checks in Python.
 
 To avoid implementing file I/O, I embedded the parsed results directly in the C source. The result is large, so the complete solver is attached as a file.
 
@@ -584,4 +584,4 @@ else:
 
 ![image.png](image%201.png)
 
-flag: `bwctf{9039493453200612fad583a67656efb0ca6df164e0bc82a29599a71b8019bafb}`
+**Flag:** `bwctf{9039493453200612fad583a67656efb0ca6df164e0bc82a29599a71b8019bafb}`

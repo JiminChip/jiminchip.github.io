@@ -52,7 +52,7 @@ When I first came across those opaque predicates, I thought they’d just be a m
 
 I decided it was time to strip away the obfuscation — and the idea was actually pretty simple. Since I already knew what the return value of those `x()` calls would be, all I had to do was patch the code so that instead of `call x`, it would **just load the corresponding constant**. But the only problem was that I had never really looked into the WASM ISA before.
 
-Fortunately, there’s a neat trick that’s already pretty well-known among reversers: rebuild the WASM to x64. The process is to run [wasm2c](https://github.com/WebAssembly/wabt) to extract a `.c` file and then recompile it with gcc. With the resulting x64 binary in hand, I figured I’d finally be able to craft the right patches to deobfuscate the code.
+Fortunately, there’s a neat trick that’s already pretty well-known among reversers: **rebuild the WASM to x64**. The process is to run [wasm2c](https://github.com/WebAssembly/wabt) to extract a `.c` file and then recompile it with gcc. With the resulting x64 binary in hand, I figured I’d finally be able to craft the right patches to deobfuscate the code.
 
 ![image.png](image%201.png)
 
@@ -154,7 +154,7 @@ after deobfuscation (renamed)
 
 ## Find Flag
 
-All that was left was to analyze the cleaned-up code, and as it turned out, it was implementing **Huffman encoding**. By extracting the table from the data section of the WASM binary and reconstructing the encoded values, I was able to recover the flag.
+All that was left was to analyze the cleaned-up code, and as it turned out, it was implementing **Huffman encoding**. By **extracting the table from the data section** of the WASM binary and reconstructing the encoded values, I was able to recover the flag.
 
 ```python
 from dataclasses import dataclass
@@ -224,4 +224,4 @@ if __name__ == "__main__":
     print(decode_vault(bitlen, ref).decode("utf-8", errors="replace"))
 ```
 
-`crew{7H15_15_4_V3rY_V3rY_V3rY_5UP3r_1NCr3D181Y_10N6_F146_600D_J08_1_C0MPr3553D_17_W17H_MY_C0MPU73r_5C13NC3_6C53_KN0W13D63_1_6U355_f4c91dbe}`
+**Flag:** `crew{7H15_15_4_V3rY_V3rY_V3rY_5UP3r_1NCr3D181Y_10N6_F146_600D_J08_1_C0MPr3553D_17_W17H_MY_C0MPU73r_5C13NC3_6C53_KN0W13D63_1_6U355_f4c91dbe}`

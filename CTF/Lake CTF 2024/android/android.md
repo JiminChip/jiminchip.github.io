@@ -29,23 +29,23 @@ Decompiling the application with `jadx` reveals the following code:
     }
 ```
 
-This is the flag-validation routine.
+This is the **flag-validation routine**.
 
-The flag is the string for which every function whose name begins with `EPFL` returns `true`.
+The flag is the string for which **every function whose name begins with `EPFL` returns `true`**.
 
 ![image.png](image.png)
 
-These functions are implemented in the x86_64 library, so the next step is to reverse engineer that library.
+These functions are implemented in the **x86_64 library**, so the next step is to reverse engineer that library.
 
-First, parse `JNI_OnLoad` to map the functions, then analyze each mapped function.
+First, parse **`JNI_OnLoad` to map the functions**, then analyze each mapped function.
 
 All functions have the following form:
 
 ![image.png](image%201.png)
 
-This form can be modeled and solved with Z3.
+This form can be **modeled and solved with Z3**.
 
-I parsed `JNI_OnLoad` to build the function mapping, parsed the corresponding functions, and added their constraints to a Z3 solver.
+I parsed `JNI_OnLoad` to build the function mapping, parsed the corresponding functions, and added their constraints to a **Z3 solver**.
 
 The following script extracts the `.c` file from IDA, parses it, and runs Z3 to recover the flag.
 
@@ -106,4 +106,4 @@ else:
     print("something wrong")
 ```
 
-`flag: EPFL{R3g1st3r_R3g1st3r_1n_L1b4rt.s0_wh3r3_w1ll_my_JN1_C4ll_g0?}`
+**Flag:** `EPFL{R3g1st3r_R3g1st3r_1n_L1b4rt.s0_wh3r3_w1ll_my_JN1_C4ll_g0?}`

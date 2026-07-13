@@ -1294,4 +1294,4 @@ The binary files loaded by this script are just the dumped **constant tables** r
 
 All in all, it was quite a rough journey to finally reach the flag.
 
-`crew{c3dacb19a3d5eaa0966b068d729fa5dc63606656182378912371273acb}`
+**Flag:** `crew{c3dacb19a3d5eaa0966b068d729fa5dc63606656182378912371273acb}`

@@ -73,7 +73,7 @@ jWx/pXZqh0ZLiCzuAsPenIE=
 
 ```
 
-The data is clearly Base64-encoded. Decoding it produces a Zstandard-compressed file, and decompressing that file yields the ELF binary.
+The data is clearly **Base64-encoded**. Decoding it produces a **Zstandard-compressed file**, and decompressing that file yields the ELF binary.
 
 ### Main Idea for Get Flag : `cmp` Hooking
 
@@ -81,9 +81,9 @@ Opening the binary in IDA shows that it is heavily obfuscated.
 
 The virtualization is particularly confusing, making it difficult to distinguish the virtual-machine routines from the program's real logic.
 
-After trying several approaches, the key idea was to hook instructions related to `cmp`. The virtual-machine routines did not contain `cmp`, whereas the real program logic necessarily used it to decide branches.
+After trying several approaches, the key idea was to **hook instructions related to `cmp`**. The virtual-machine routines did not contain `cmp`, whereas the real program logic necessarily used it to decide branches.
 
-Hooking `cmp` therefore provided a starting point for tracing the branches that lead to a valid solution.
+**Hooking `cmp`** therefore provided a starting point for tracing the branches that lead to a valid solution.
 
 The following GDB script installs the hooks.
 
@@ -219,7 +219,7 @@ After varying the input and observing the results,
 
 `0x180` is the length of my input. The program reads it one byte at a time and compares each byte with `0x24` (`$`).
 
-When it finds `$`, the comparison routine ends. In other words, `$` is used as the input terminator.
+When it finds `$`, the comparison routine ends. In other words, **`$` is used as the input terminator**.
 
 ![image.png](image%201.png)
 
@@ -257,7 +257,7 @@ with nine checks at each location, giving 27 in total.
 
 `0xd4c2086` is the product of the first nine primes, starting from 2.
 
-This strongly suggests that the challenge is a Sudoku puzzle.
+This strongly suggests that the challenge is a **Sudoku puzzle**.
 
 The three kinds of validation routines check rows, columns, and 3×3 blocks,
 
@@ -265,7 +265,7 @@ with nine checks for each kind.
 
 There are also `>= 0xa` comparisons, some involving `0xff` and others not.
 
-This indicates that non-`0xff` values are pre-filled Sudoku cells, while `0xff` represents an empty cell.
+This indicates that **non-`0xff` values are pre-filled Sudoku cells**, while **`0xff` represents an empty cell**.
 
 ### Stage 3: Completing the Input Format
 
@@ -273,9 +273,9 @@ We can now understand the meaning of `0xff == 0xff`.
 
 Because `0xff` represents an empty cell, this check verifies that input is supplied for an empty cell rather than a pre-filled one.
 
-Each Sudoku entry therefore requires three numbers:
+Each Sudoku entry therefore requires **three numbers**:
 
-`<x coordinate> <y coordinate> <value>`. CyKor's `D1N0` identified this format.
+**`<x coordinate> <y coordinate> <value>`**. CyKor's `D1N0` identified this format.
 
 ### Solving the Sudoku
 
@@ -367,4 +367,4 @@ Sending the resulting input to the server
 
 returns the flag.
 
-flag: `EPFL{it-is-a-smol-step-for-me-but-an-even-smoler-one-for-compilers}`
+**Flag:** `EPFL{it-is-a-smol-step-for-me-but-an-even-smoler-one-for-compilers}`

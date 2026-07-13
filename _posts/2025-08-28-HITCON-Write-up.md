@@ -17,7 +17,7 @@ comment: true
 
 ## Overview
 
-Although categorized under the reversing tag, the challenge actually involved a considerable amount of pwnable and cryptography. Solving it purely through reverse engineering would have required, on average, about 2^43 hash computations. To bring this down to around 2^22 using a birthday attack, we had to trigger vulnerabilities in the challenge binary and make use of a heap address leak along with an Arbitrary Address Read (AAR).
+Although categorized under the reversing tag, the challenge actually involved a considerable amount of pwnable and cryptography. Solving it purely through reverse engineering would have required, on average, about **2^43 hash computations**. To bring this down to around **2^22 using a birthday attack**, we had to trigger vulnerabilities in the challenge binary and make use of a **heap address leak** along with an **Arbitrary Address Read (AAR)**.
 
 In theory, if the AVX-optimized hash computations had been offloaded to a GPU via CUDA (or something similar), performing 2^43 operations might have been feasible. In practice, however, I gave up during the competition after attempting to port the hash function to CUDA for analysis.
 
@@ -125,7 +125,7 @@ After login in with the registered username and password, creating a note stores
 
 Looking at the code above, the return value of `hash()` is masked with `limit_mask`, which is 0x7FFFFFFFFFF. In other words, the hash length is 43 bits — small enough to allow collision to occur with reasonable probability. 
 
-Although the flag is stored under `note-node-flag;` and the password cannot be set to `none` — meaning that reading the flag would require about 2^43 hash computations — for everythin else, since the plaintext can be freely chosen before hashing, collision between users, between notes, or even between a user and a note can be achieved with only around 2^22 hash computations (by birthday attack).
+Although the flag is stored under `note-node-flag;` and the password cannot be set to `none` — meaning that reading the flag would require about 2^43 hash computations — for everythin else, since the plaintext can be freely chosen before hashing, a **collision between a user and a note** can be achieved with only around **2^22 hash computations** (by birthday attack).
 
 Perhaps, if the hash function were ported to the GPU, it might be possible to generate a direct collision with the flag and read the note where it is stored… However, since analyzing the AVX-optimized function is not straightforward, I instead focused on exploring what could realistically be achieved with around 2^22 hash computations by using the already-implemented `hash()` as it.
 
@@ -153,13 +153,13 @@ struct note
 
 When login, the `username` field is printed, and when using the `read_note` feature, the `title` and `content` are printed. Therefore, after finding a collision pair, if you log in as a note, the `title` field — which resides at the same offset as `username` — will be leaked (at this point, the `title` field is a pointer to the heap region where the title is stored). Conversely, if you use the `read_note` feature with a collision pair corresponding to user data, the note’s `content` field is actually a pointer, so you can read the data located at the address corresponding to the last 8 bytes of the 16-byte password.
 
-The actual flag is stored in the heap section, so by combining a heap leak with an Arbitrary Address Read(AAR), it can be retrieved.
+The actual flag is stored in the heap section, so by combining a **heap leak** with an **Arbitrary Address Read (AAR)**, it can be retrieved.
 
 ## Hooking `hash()` for a Birthday Attack
 
 With the attack scenario fully laid out, let’s move on to actually retrieving the flag.
 
-To perform a heap leak and an AAR, we first need to find a hash collision pair — but interpreting the AVX code is no easy task. So, let’s start by taking a quick look at what the function looks like.
+To perform a heap leak and an AAR, we first need to find a **hash collision pair** — but interpreting the AVX code is no easy task. So, let’s start by taking a quick look at what the function looks like.
 
 ```c
 unsigned __int64 hash_sub1()
@@ -222,7 +222,7 @@ unsigned __int64 hash_sub1()
   }
 ```
 
-To port the hash to the GPU, we would first need to analyze and fully understand its behavior. However, since around 2^22 computations are still feasible on the CPU, it is sufficient to simply reuse the already well-implemented hash function. In particular, by leveraging a DLL for hooking, the function from the binary can be used directly in a higher-level language like C/C++ within a single process, at native speed, without relying on inter-process communication or debugging events.
+To port the hash to the GPU, we would first need to analyze and fully understand its behavior. However, since around 2^22 computations are still feasible on the CPU, it is sufficient to simply **reuse the binary’s existing hash function**. In particular, by leveraging a DLL for hooking, the function from the binary can be used directly in a higher-level language like C/C++ within a single process, at native speed, without relying on inter-process communication or debugging events.
 
 The idea is very simple. On Linux, the executable image base can also be obtained from within a DLL using the following code.
 

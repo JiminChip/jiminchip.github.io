@@ -13,11 +13,11 @@ comment: true
 ---
 [maybe_checker.zip](maybe_checker.zip)
 
-The binary contains 60 functions, so I considered whether to parse them automatically or analyze them manually.
+The binary contains **60 functions**, so I considered whether to parse them automatically or analyze them manually.
 
-Sixty functions seemed manageable to analyze by hand, whereas the time required to build a parser was hard to predict, so I chose manual analysis.
+Sixty functions seemed manageable to analyze by hand, whereas the time required to build a parser was hard to predict, so I chose **manual analysis**.
 
-Once the analysis was complete, recovering the flag was straightforward with Z3. The solver is shown below.
+Once the analysis was complete, recovering the flag was straightforward with **Z3**. The solver is shown below.
 
 ```python
 from z3 import *
@@ -230,4 +230,4 @@ else:
     print("error")
 ```
 
-flag: `bwctf{WE1C0-M3T0B-1U3W4-T3RCT-FH0P3-Y0UH4-VEFUN}`
+**Flag:** `bwctf{WE1C0-M3T0B-1U3W4-T3RCT-FH0P3-Y0UH4-VEFUN}`
