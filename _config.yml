@@ -23,6 +23,10 @@ user:
   job: Aspiring hackers
   # aboutme: /Notion # comment this out if you don't need the 'about' page.
 
+navigation_categories:
+  - CTF
+  - Tech
+
 exclude:
   - README.md
   - LICENSE

@@ -45,6 +45,8 @@ CyKor - KU hacking club & hacking team
 
 - DEFCON 33 — Finalist (Team. Cold Fusion)
 
+- DEFCON 34 — Finalist (Team. Cold Fusion)
+
 - HITCON 2025 — 4th (Team. CTF Demon Hunter) 
 
 - Blue Water CTF 2024 — 2nd (Team. CyKor)
@@ -56,6 +58,8 @@ CyKor - KU hacking club & hacking team
 - Whitehat Contest 2025 — 1st (University Division) (Team. 무관탈출넘버원)
 
 - LG Uplus CTF 2024 — 2nd (Team. roKyC)
+
+- Hacktheon Sejong 2026 (Advanced) — 4th (Team. 02vs04)
 
 - Lake CTF 24-25 — Finalist (Team. CyKor)
 
@@ -71,6 +75,8 @@ CyKor - KU hacking club & hacking team
 
 ### Focus
 
-I primarily study reverse engineering, with a particular focus on obfuscation and code-concealment techniques—how to make programs harder to understand, analyze, and recover. I'm also occasionally interested in pwnable/system exploitation, and I've been thinking about ways to leverage unintended behaviors (e.g., vulnerability-driven behaviors) as building blocks for obfuscation or code-hiding designs.
+I primarily study reverse engineering, with a strong interest in game hacking, software obfuscation, and code-concealment techniques. I am particularly interested in how programs can be made more difficult to understand, analyze, and reconstruct, as well as how hidden execution mechanisms can be designed outside conventional control-flow and code representations.
 
-I enjoy wargaming, mostly on a site called [Dreamhack](http://dreamhack.io), and I'm a member of Team CyKor, participating in various CTFs to gain experience. Here is my Dreamhack user [link](https://dreamhack.io/users/25740).
+I also occasionally study system exploitation and vulnerability-driven behavior, especially when unintended program or system behaviors can be repurposed as building blocks for obfuscation, anti-analysis, or code-hiding techniques. My broader interests include binary analysis, runtime internals, low-level program behavior, and the design of unconventional execution mechanisms.
+
+I enjoy wargaming, mostly on a site called [Dreamhack](http://dreamhack.io). Here is my Dreamhack user [link](https://dreamhack.io/users/25740).

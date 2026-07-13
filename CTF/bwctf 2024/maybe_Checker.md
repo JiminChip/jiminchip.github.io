@@ -5,16 +5,16 @@ date: October 14, 2024
 categories: CTF
 comment: true
 ---
-**상위 포스트 -** [Blue Water CTF 2024](/2024-10/bwctf_2024)
+**Parent post:** [Blue Water CTF 2024](/2024-10/bwctf_2024)
 
 ---
 [maybe_checker.zip](maybe_checker.zip)
 
-Binary had 60 functions, and I debated whether to parse it or analyze it manually.
+The binary contains 60 functions, so I considered whether to parse them automatically or analyze them manually.
 
-I thought 60 was reasonable number to analyze manually, so I chose to do it manually rather than parsing, which is hard to predict how long it will take.
+Sixty functions seemed manageable to analyze by hand, whereas the time required to build a parser was hard to predict, so I chose manual analysis.
 
-After I analyzed, getting the flags was a simple matter of using the z3 solver. Below is the z3 solver code.
+Once the analysis was complete, recovering the flag was straightforward with Z3. The solver is shown below.
 
 ```python
 from z3 import *

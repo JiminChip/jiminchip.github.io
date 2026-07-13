@@ -5,7 +5,7 @@ date: October 14, 2024
 categories: CTF
 comment: true
 ---
-**상위 포스트 -** [Blue Water CTF 2024](/2024-10/bwctf_2024)
+**Parent post:** [Blue Water CTF 2024](/2024-10/bwctf_2024)
 
 ---
 
@@ -15,17 +15,17 @@ comment: true
 
 [Overall Control Flow](#overall-control-flow)
 
-[Deobfuscation - Control Flow Flattening](#deobfuscation---control-flow-flattening)
+[Deobfuscation: Loop Unrolling](#deobfuscation-loop-unrolling)
 
-[Idea for Get Flag](#idea-for-get-flag)
+[Strategy for Recovering the Flag](#strategy-for-recovering-the-flag)
 
-[Parsing](#parse-code)
+[Parsing the Code](#parsing-the-code)
 
-[Solver and Get Flag](#solver-and-get-flag)
+[Solving and Recovering the Flag](#solving-and-recovering-the-flag)
 
 ## Overall Control Flow
 
-If I initially put in a 100-digit hex input, it will convert to binary and store a 400-bit value.
+The program first converts a 100-digit hexadecimal input to binary and stores it as 400 bits.
 
 ```c
   do
@@ -61,19 +61,19 @@ If I initially put in a 100-digit hex input, it will convert to binary and store
   while ( v15 <= 799 );
 ```
 
-Then there is a routine that runs 800 functions.
+It then executes 800 functions.
 
-Of these 800 functions, there are 40 validation functions, all of which must pass.
+Forty of those functions are validation routines, and all of them must pass.
 
-If you look at the format of the functions, the first and second arguments are global variable values and input values, and the result of the function execution is stored back into the global variables.
+The functions take a global value and an input value as their first two arguments, then store their result back in the global state.
 
-Since 40 of these functions are validation functions, they don't store their results in global variables, so the 40 values that are lacking in the global variables are initialized in the function in `.init_array.`
+The 40 validation routines do not write results to global variables. Their missing global values are instead initialized by functions in `.init_array`.
 
-The arrays `&off_211CA0` and `&off_211020` contain 400 functions and 20 verification functions, respectively. By analyzing the relationship between the data in each function and the verification routine, we can see that the 400 bits of input are computed in the form 20 * 20.
+The arrays `&off_211CA0` and `&off_211020` each contain 400 functions, including 20 validation functions. Examining the data flow between these functions and the validation routines shows that the 400 input bits are arranged as a 20 × 20 grid.
 
-The `&off_211CA0` array performs and verifies operations on vertical lines and the `&off_211020` array on horizontal lines.
+`&off_211CA0` processes and validates columns, while `&off_211020` does the same for rows.
 
-First, if we look at the routine to execute the 800 functions described above, there is no guarantee that the functions will be executed in the order of the array. For this, I wrote a gdb script to get the control flow.
+The dispatcher does not obviously guarantee that functions execute in array order, so I wrote a GDB script to trace the control flow.
 
 ```c
 # gdb -q -x get_cf.py
@@ -115,13 +115,13 @@ for i in range(800):
     ge("continue", to_string=True)
 ```
 
-When I ran it, it was kind enough to notice that the function was still executing in the order of the array. Of course, it could change depending on the input, but it's hard to change the order of the function's execution(I found this out with static analysis).
+The trace showed that the functions execute in array order. Although this might appear input-dependent, static analysis showed that the execution order is not easily changed.
 
-## Deobfuscation - Control Flow Flattening
+## Deobfuscation: Loop Unrolling
 
-Now it's time to analyze the 800 functions that are expressed in a complex way. It's full of complex, hard-to-understand code, but if you look carefully, you'll notice that there are some patterns and the control flow is flattened.
+The 800 functions initially look complex, but their structure is repetitive. This is not control-flow flattening: the code is primarily a loop-unrolled sequence of repeated arithmetic operations.
 
-Analyzing the pattern and porting the flattened control flow to python by expressing it as a simple loop looks like this
+After identifying the repeated pattern, I expressed the unrolled sequence as a regular loop and ported it to Python:
 
 ```python
 def A(num):
@@ -165,21 +165,21 @@ res = func_routine(0x25AC, 1, 0x829B, 0xF5FE, const_list)
 print(hex(res))
 ```
 
-I ported one specific function to target, and through debugging, I  found that both the input and output values matched. (not a critical discovery, but a closer look at the python code above showed that the behavior of the function `B` was the same as `% 0x10001`).
+I ported one representative function and verified through debugging that its inputs and outputs matched the original. A closer look also showed that `B` behaves like `% 0x10001`.
 
-## Idea for get flag
+## Strategy for Recovering the Flag
 
-With the main function, and the behavior of the 800 functions, all outlined, it was time to think of a scenario to get the flags. I wondered if mathematical obfuscation was some kind of fun form of metamorphic code, but after realizing that only 20 bits of input are used per verification, I decided to just brute-force it. I figured that after brute-forcing to get individual solutions for each verification, I could use the z3 solver to get one solution that would pass all the verifications simultaneously.
+With the main function and the behavior of all 800 routines understood, the remaining task was to recover an input that passed every check. After noticing that each validation uses only 20 input bits, I chose brute force. I could brute-force an individual solution for each validation routine and then use Z3 to combine them into a single input that satisfies every constraint.
 
-I had to port all the routines in the binary to do the brute-force. The constant values used in the computations were not stored neatly in a table, but were hard-coded inside the code. So I parsed it, pulled out the constant table, ported the routines in binary to C, and did the brute-force, which solved the problem in a reasonable amount of time.
+To do this, I ported all routines from the binary. Their constants were hard-coded rather than stored in a table, so I parsed the code, extracted the constants, ported the routines to C, and brute-forced the individual checks in a reasonable amount of time.
 
-This idea came to me as I was nearing the end of parsing, but there are ways to skip parsing and do brute-force. The idea is to use the binary as it is, and the first idea was to use a debugging script like gdb script to put in input and pull out the corresponding output. However, for debugging, even if I automate it by writing a script, I think it would be quite time-consuming when there are as many as 20 bits of debugging signals. So my second thought was to use a tool like Frida and script it so that I can inject code that pulls out the output corresponding to a specific input and brute-force it. In particular, with an input of 20 * 20, I can brute-force 20 rows simultaneously in a single process run because rows don't interfere with each other and columns don't interfere with each other (and vice versa). Using this, I believe we can get individual solutions for each verification with a brute-force of size 20bit * 2. This means that we could get the answer in 2^21 process runs, which is a reasonable enough range. However, this is just one of the scenarios I think is possible. I parsed the code to get the flags, pulled out the constant values, and wrote my own code for the brute-force.
+I arrived at this strategy near the end of parsing, but brute force could also avoid parsing entirely. One option is to use a debugger to provide inputs and collect the corresponding outputs, though automating that for 20-bit signals would likely be slow. A better option would be to use Frida to instrument the binary and extract outputs for chosen inputs. Because the 20 rows are independent of one another (as are the columns), a single process run could brute-force 20 rows in parallel. This reduces the search to roughly 2^21 process runs for individual solutions. I ultimately used the parsed code, extracted the constants, and wrote a dedicated brute-force implementation.
 
-## Parse code
+## Parsing the Code
 
-Let me just say up front that this was a very painful process. It would have been great if it compiled cleanly, but it didn't, and many of the multiplication operations were replaced by left shift, which made parsing very difficult. I wrote a parsing script as best I could, but it only succeeded in parsing about 680 of the 800 functions, and the remaining about 120 functions were parsed by hand.
+Parsing was difficult because the decompiled output did not compile cleanly and many multiplication operations had been replaced with left shifts. My parser handled about 680 of the 800 functions; I parsed the remaining roughly 120 by hand.
 
-Before I encountered multiplication expressed as shift, I tried parsing using the disassembled result.
+Before encountering multiplications expressed as shifts, I first tried parsing the disassembly.
 
 ```python
 import subprocess
@@ -268,11 +268,11 @@ f.close()
 print(cnt)
 ```
 
-However, it failed to parse about 1/4 of the functions, so to improve it, I tried parsing based on the decompiled code.
+This failed for about one quarter of the functions, so I next tried parsing the decompiled output.
 
-First, I extracted it into a `.c` file using the IDA's functions and then parsed it. The `.c` file is very large, so I won't attach it.
+I first used IDA to extract the decompilation into a `.c` file, then parsed that file. The file is too large to include here.
 
-Below is the parsing script. I wouldn't recommend looking closely at the code below, it's quite messy and still an incomplete script that doesn't parse about 1/8 of whole functions.
+The script below is still incomplete and does not parse about one eighth of the functions, but it provided a useful starting point.
 
 ```python
 f = open("main.c", "r")
@@ -334,13 +334,13 @@ for idx, val in enumerate(func_list):
 f.close()
 ```
 
-I thought about how to improve the parsing, but in the end I decided to manually parse the functions that failed to parse.
+Rather than continue refining the parser, I manually analyzed the functions it could not handle.
 
-The biggest problem with manual parsing is human error, and even worse, it's very resource intensive to figure out where I made a mistake. To avoid this, I wrote code to verify that the parsing is correct.
+The main risk of manual parsing is human error, and locating an error is expensive. To address that, I wrote a verification script.
 
-I wrote code to pull out the output corresponding to the specific input of each function via gdb script, and then calculate the output corresponding to the input again based on the parsing results and compare them.
+The script collects each function's output for a given input through GDB, recomputes that output from the parsed representation, and compares the two.
 
-First, below is the script to extract the output corresponding to the specific input of each function.
+First, this script extracts each function's output for a chosen input.
 
 ```python
 # gdb -x -q verify.py
@@ -413,7 +413,7 @@ for i in range(800):
 f.close()
 ```
 
-Then, below is the code to validate my parsing results.
+The following code validates the parsed results.
 
 ```python
 f = open("parsed", "r")
@@ -486,21 +486,21 @@ print(cnt)
 
 ![image.png](image.png)
 
-When you run it, it prints out which functions failed to parse, as shown above, and it also prints out the number of functions that failed to parse. This validation script allowed me to perform the painstaking parsing process without giving up.
+When run, it lists the functions whose parsed behavior does not match the binary and prints their total count. This made the manual parsing process manageable.
 
-## Solver and get flag
+## Solving and Recovering the Flag
 
-Once parsed, it's not hard to get the flags now. The routines in the binary were already implemented and it was simple to brute force them. The existing python script took about 15-20 minutes to get the solution for one verification routine, and I decided that doing all 40 in python would be too much work, so I implemented them in C.
+Once the routines were parsed, brute-forcing them was straightforward. The Python implementation took 15–20 minutes for one validation routine, so I reimplemented it in C rather than run all 40 checks in Python.
 
-I didn't want to bother implementing file input/output, so I just wrote the parsing results inside the C code. This made the C file very large, and I don't think it's polite to omit parts of the solver code, so I'm attaching it as a file.
+To avoid implementing file I/O, I embedded the parsed results directly in the C source. The result is large, so the complete solver is attached as a file.
 
 [solver.c](solver.c)
 
-When run, it prints the individual solutions for the 40 verifications, which I copied and saved to `solved.txt.`
+It prints the individual solutions for all 40 validations, which I saved to `solved.txt`.
 
 [solved.txt](solved.txt)
 
-I then wrote a z3 solver script to combine all the solutions.
+I then wrote a Z3 script to combine those solutions.
 
 ```python
 from z3 import *

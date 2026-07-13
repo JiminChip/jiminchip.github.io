@@ -6,11 +6,11 @@ categories: CTF
 comment: true
 ---
 
-**상위 포스트 -** [Lake CTF 24-25 Quals](/2024-12/LakeCTF2024)
+**Parent post:** [Lake CTF 24-25 Quals](/2024-12/LakeCTF2024)
 
 ---
 
-`jadx`로 디컴파일을 해 보면,
+Decompiling the application with `jadx` reveals the following code:
 
 ```java
     /* synthetic */ void m4lambda$onCreate$0$comlakectfMainActivity(EditText editText, TextView textView, View view) {
@@ -28,25 +28,25 @@ comment: true
     }
 ```
 
-위와 같은 flag checking 루틴이 존재합니다.
+This is the flag-validation routine.
 
-EPFL로 시작하는 함수들의 반환 값들이 모두 True가 되도록 하는 string이 flag가 되게 됩니다.
+The flag is the string for which every function whose name begins with `EPFL` returns `true`.
 
 ![image.png](image.png)
 
-이 함수들은 x86_64 library에 존재하는데, 이를 리버싱해주면 됩니다.
+These functions are implemented in the x86_64 library, so the next step is to reverse engineer that library.
 
-먼저 `JNI_OnLoad`를 해석하여 함수를 매칭한 뒤, 함수를 해석해 주면 됩니다.
+First, parse `JNI_OnLoad` to map the functions, then analyze each mapped function.
 
-함수들의 형태는 모두
+All functions have the following form:
 
 ![image.png](image%201.png)
 
-위와 같은 형태로 z3를 이용하여 해를 구해줄 수 있습니다.
+This form can be modeled and solved with Z3.
 
-`JNI_OnLoad`를 파싱하여 함수 매칭 후 해당되는 함수를 parsing하여 z3 solver에 추가하여 해를 구해줄 겁니다.
+I parsed `JNI_OnLoad` to build the function mapping, parsed the corresponding functions, and added their constraints to a Z3 solver.
 
-IDA에서 `.c` 파일 추출 후 parsing 하고 z3 solver를 가동하는 스크립트를 짜주면 flag를 구할 수 있습니다.
+The following script extracts the `.c` file from IDA, parses it, and runs Z3 to recover the flag.
 
 ```python
 import re

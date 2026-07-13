@@ -6,7 +6,7 @@ categories: CTF
 comment: true
 ---
 
-**상위 포스트 -** [Lake CTF 24-25 Quals](/2024-12/LakeCTF2024)
+**Parent post:** [Lake CTF 24-25 Quals](/2024-12/LakeCTF2024)
 
 ---
 
@@ -20,14 +20,14 @@ comment: true
 
 [Stage 2 : Sudoku](#stage-1--input-format)
 
-[Stage 3 : Input Format 완성](#stage-3--input-format-완성)
+[Stage 3: Completing the Input Format](#stage-3-completing-the-input-format)
 
 ---
 
 
 ### Get Binary from Base64
 
-아래와 같은 파일을 줍니다.
+The challenge provides the following file:
 
 ```
 KLUv/WRQSs1DAJbpmjSw9hzCAKhV/tHuwhGqMVwB9yUQ9asvj+5/MvA45BffQuGBt+JU6O65Zq0J
@@ -72,19 +72,19 @@ jWx/pXZqh0ZLiCzuAsPenIE=
 
 ```
 
-딱 봐도 base 64이기 때문에 decoding 해주면 zstd 압축 파일이 나오는데, 이를 또 압축 해제하면 ELF 바이너리가 튀어 나오게 됩니다.
+The data is clearly Base64-encoded. Decoding it produces a Zstandard-compressed file, and decompressing that file yields the ELF binary.
 
 ### Main Idea for Get Flag : `cmp` Hooking
 
-바이너리를 IDA로 까 보면 굉장히 어지럽게 난독화가 되어 있는 모습을 확인할 수 있습니다.
+Opening the binary in IDA shows that it is heavily obfuscated.
 
-특히 가상화가 매우 어지럽게 되어 있는데, 무엇보다 가상화 루틴과 실제 프로세스 루틴을 구별하는 것이 매우 어려웠습니다.
+The virtualization is particularly confusing, making it difficult to distinguish the virtual-machine routines from the program's real logic.
 
-이런 저런 시도들을 일단 시도해 보았지만, 문제를 풀기 위해서 가장 핵심이 되는 아이디어는 `cmp` 관련 명령어에 hooking을 거는 것이었습니다. 일단 가상화 루틴에 `cmp`가 포함되어 있지 않았으며, 실제 프로세스 동작의 분기를 결정짓기 위해서는 `cmp`를 불가피하게 거쳐야 하는 구조를 띄고 있습니다.
+After trying several approaches, the key idea was to hook instructions related to `cmp`. The virtual-machine routines did not contain `cmp`, whereas the real program logic necessarily used it to decide branches.
 
-이를 이용하여 `cmp`쪽에 hooking하여 정답의 분기로 가기 위한 분석을 시작할 수 있었습니다.
+Hooking `cmp` therefore provided a starting point for tracing the branches that lead to a valid solution.
 
-아래는 gdb script를 이용하여 hooking하는 스크립트입니다.
+The following GDB script installs the hooks.
 
 ```python
 # gdb -q -x cmp-hook.py
@@ -208,79 +208,79 @@ ge("run < input", to_string=True)
 exit()
 ```
 
-`input` 파일에 입력을 넣어주고 실행하면 hooking 결과가 출력됩니다.
+Put an input in the `input` file and run the script to print the hook results.
 
 ### Stage 1 : Input Format
 
-input을 이리 저리 바꿔가며 분석을 하다 보면
+After varying the input and observing the results,
 
 ![image.png](image.png)
 
-0x180은 제 input의 길이이고, input에서 1byte씩 가져와서 0x24(`$`)와 비교하는 연산을 수행합니다.
+`0x180` is the length of my input. The program reads it one byte at a time and compares each byte with `0x24` (`$`).
 
-그리고 `$`를 찾으면 비교 루틴이 끝나게 됩니다. → input의 끝을 알리는 문자로써 `$`가 사용됩니다.
+When it finds `$`, the comparison routine ends. In other words, `$` is used as the input terminator.
 
 ![image.png](image%201.png)
 
-그 뒤에 제 input이 `\n` 혹은  `` 인지 확인합니다.
+It then checks whether the next byte is `\n` or a null byte.
 
-만약 두 문자가 아닌 문자가 input으로 들어왔으면
+If the byte is neither of those characters,
 
 ![image.png](image%202.png)
 
-이런 식으로 `0` ~ `9` 사이의 값인지 확인합니다.
+the program checks whether it is a digit from `0` to `9`.
 
-이 검증을 통과하지 못하면 바로 프로세스는 종료되게 됩니다.
+The process exits immediately if this validation fails.
 
-이런 검증을 통과한 뒤에 또 새로운 검증이 등장하게 되는데, 사실 제 hooking script로 원인을 정확히 규명하기는 어려웠습니다.
+After this validation, another check appears. Its purpose was difficult to determine precisely from the hook output alone.
 
 ![image.png](image%203.png)
 
-이런 식으로 중간 중간 `0xff == 0xff` cmp 루틴이 삽입되어 있었는데, 어떨 때는 통과되지만 어떨 때는 통과하지 못하여 상당히 헤메었습니다.
+The program intermittently inserted `0xff == 0xff` comparison routines. Some inputs passed them while others did not, which was initially confusing.
 
-이 루틴을 추측해내기 위해서는 이후 루틴을 확인해야 합니다.
+The later logic is needed to infer what these checks mean.
 
 ### Stage 2 : Sudoku
 
-input을 이것 저것 넣던 중 통과하는 input을 찾아내어서 이 input 기준으로 이후 루틴들을 살펴보면
+After finding an input that passed and examining the subsequent logic,
 
 ![image.png](image%204.png)
 
-이런 식으로 `?? >= 0xa` 9개 이후 0xd4c2086과 검증하는 루틴이 존재합니다.
+there is a routine that performs nine `?? >= 0xa` checks and then compares a value with `0xd4c2086`.
 
-이런 루틴이 정확히 27개 존재하였으며,
+There are exactly 27 such routines.
 
-`0xd4c2086`과 비교하는 지점의 rip(program counter)는 정확히 3가지 존재하였고,
+There are exactly three program-counter locations at which the value is compared with `0xd4c2086`,
 
-각각 9개씩 있어서 27개가 들어맞았습니다.
+with nine checks at each location, giving 27 in total.
 
-0xd4c2086은 2부터 순차적으로 9개의 소수를 곱한 값입니다.
+`0xd4c2086` is the product of the first nine primes, starting from 2.
 
-→ 스도쿠임을 추측할 수 있었습니다.
+This strongly suggests that the challenge is a Sudoku puzzle.
 
-3가지의 검증 루틴은 각각 가로줄, 세로줄, 네모 박스를 검증하는 루틴이었고
+The three kinds of validation routines check rows, columns, and 3×3 blocks,
 
-각각 9개의 검증을 거치는 방식이 되겠습니다.
+with nine checks for each kind.
 
-그리고 `>= 0xa`와 비교하는 부분이 있는데 0xff인 부분도 있고 0xff가 아닌 부분도 있는데
+There are also `>= 0xa` comparisons, some involving `0xff` and others not.
 
-0xff가 아닌 부분이 sudoku에 이미 값이 채워져 있는 값, 그리고 0xff가 빈칸임을 추측할 수 있었습니다.
+This indicates that non-`0xff` values are pre-filled Sudoku cells, while `0xff` represents an empty cell.
 
-### Stage 3 : Input Format 완성
+### Stage 3: Completing the Input Format
 
-`0xff == 0xff` 의 의미를 비로소 이해할 수 있습니다.
+We can now understand the meaning of `0xff == 0xff`.
 
-0xff가 빈칸에 해당하는 값이었고, input을 정확히 빈칸에 넣는지 아니면 이미 값이 설정된 곳에 넣는지를 검증하는 형태가 되겠습니다.
+Because `0xff` represents an empty cell, this check verifies that input is supplied for an empty cell rather than a pre-filled one.
 
-그래서 sudoku에 값 하나를 얻기 위해서 숫자 3개가 들어가야 하는데
+Each Sudoku entry therefore requires three numbers:
 
-`<x 좌표> <y 좌표> <넣을 값>` 이런 구조로 input이 들어가게 됩니다. 이거는 CyKor의 자랑 `D1N0`가 찾아 주었습니다.
+`<x coordinate> <y coordinate> <value>`. CyKor's `D1N0` identified this format.
 
-### Sudoku 풀기
+### Solving the Sudoku
 
-입력을 `$` 하나만 넣으면 아무 입력이 들어가지 않은 sudoku를 얻을 수 있습니다.
+Submitting only `$` reveals the Sudoku board with no values entered.
 
-이를 추출하면 다음과 같습니다.
+Extracting it gives the following board:
 
 ```python
 sudoku = [
@@ -296,9 +296,9 @@ sudoku = [
 ]
 ```
 
--1이 빈칸이 됩니다.
+`-1` denotes an empty cell.
 
-이를 z3로 해결하고 각 해를 input format을 맞춰서 sudoku의 적절한 위치에 놓도록 하는 솔버를 짜주겠습니다.
+The following Z3 solver solves the board and emits each value in the required input format for its corresponding cell.
 
 ```python
 from z3 import *
@@ -360,10 +360,10 @@ else:
 
 ![image.png](image%205.png)
 
-이렇게 구한 input을 서버에게 날려 주면
+Sending the resulting input to the server
 
 ![image.png](image%206.png)
 
-flag를 얻을 수 있습니다.
+returns the flag.
 
 flag: `EPFL{it-is-a-smol-step-for-me-but-an-even-smoler-one-for-compilers}`

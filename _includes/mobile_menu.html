@@ -7,11 +7,10 @@
     </li>
 
     {% endif %}
-    {% for category in site.categories %}
-    {% capture cat_name %}{{ category | first }}{% endcapture %}
+    {% for cat_name in site.navigation_categories %}
 
     <li class="nav_item">
-      <a href="{{ site.baseurl }}/categories/{{ cat_name }}" id="aa">{{ cat_name }} ({{ category | last | size }})</a>
+      <a href="{{ site.baseurl }}/categories/{{ cat_name }}" id="aa">{{ cat_name }}</a>
     </li>
     {% endfor %}
   </ul>

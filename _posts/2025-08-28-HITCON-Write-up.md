@@ -376,7 +376,7 @@ void find_collision(void) {
     fprintf(stderr, "[shim] test-hash : %lx\n", (unsigned long)hash);
     fprintf(stderr, "[shim] test-hash1: %lx\n", (unsigned long)hash1);
 
-    // 1) user-%s; 구성
+    // 1) Construct user-%s
     std::unordered_map<uint64_t, std::string> table;
     table.reserve(PREBUILD_M * 2);
 
@@ -398,7 +398,7 @@ void find_collision(void) {
     }
     auto t1 = std::chrono::steady_clock::now();
 
-    // 2) note-%s-%s; 스트리밍 탐색
+    // 2) Stream through note-%s-%s
     std::vector<char> buf2(5 + MAX_LEN + 1 + MAX_LEN + 1);
     size_t tried = 0;
     while (true) {
