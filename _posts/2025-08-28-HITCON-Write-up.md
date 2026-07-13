@@ -1,6 +1,10 @@
 ---
 title: HITCON 2025 Write-Up
 read_time: 10
+image:
+  path: /assets/img/post-covers/hitcon-2025.png
+  alt: HITCON CTF 2025 logo
+  no_bg: true
 categories: CTF
 tags: [write-up, heap-exploit, hooking, birthday-attack]
 comment: true

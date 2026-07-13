@@ -15,3 +15,29 @@ article > header .post-meta > .d-flex > span:first-child {
 article > header .post-meta > .d-flex {
   justify-content: flex-end !important;
 }
+
+/* Keep CTF logos intact while using a narrow, full-height image rail. */
+#post-list img[src*='/assets/img/post-covers/'] {
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  #post-list .post-preview > .col-md-5 {
+    width: 20%;
+    aspect-ratio: 1;
+    align-self: center;
+  }
+
+  #post-list .post-preview > .col-md-5 .preview-img {
+    aspect-ratio: 1;
+  }
+
+  #post-list .post-preview > .col-md-7 {
+    width: 80%;
+  }
+}
+
+/* Featured logos belong on cards and social previews, not inside the post body. */
+article > header .post-meta > .mt-3.mb-3 {
+  display: none;
+}
