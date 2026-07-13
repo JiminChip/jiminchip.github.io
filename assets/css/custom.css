@@ -1,0 +1,17 @@
+/* Chirpy refactors highlighted blocks from <pre> to <code>. */
+div[class^='language-'] .highlight > code {
+  display: block;
+  padding: 0 1rem;
+  white-space: pre;
+  font-size: 0.85rem;
+  line-height: 1.4rem;
+}
+
+/* This is a single-author blog, so the repeated author label is redundant. */
+article > header .post-meta > .d-flex > span:first-child {
+  display: none;
+}
+
+article > header .post-meta > .d-flex {
+  justify-content: flex-end !important;
+}

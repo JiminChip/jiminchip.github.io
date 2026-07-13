@@ -1,54 +1,94 @@
-title: Chip-folio #Your awesome title
-email: jjm4043@gmail.com
-description: > # this means to ignore newlines until "baseurl"
-  simple blog to record hacking, reverse engineering, reversing, pwnable, CTF, write-ups
+theme: jekyll-theme-chirpy
 
-baseurl:  # the subpath of the site
-url: https://github.com/JiminChip/jiminchip.github.io # the base hostname & protocol for your site
-
-permalink: /:year-:month/:title
+lang: en
 timezone: Asia/Seoul
 
-favicon: /assets/img/profile.png
+title: mini-chip
+tagline: Aspiring hackers
+description: >-
+  CTF write-ups and technical notes on reverse engineering, binary analysis, and low-level systems.
 
-google_analytics: #UA—XXXXXXXX-X
-disqus_shortname: #disqus shortname
-cusdis:
-    app_id: #your cusdis app_id
+url: "https://mini-chip.kr"
+baseurl: ""
 
-user:
-  name: mini-chip
-  pic: /assets/img/profile.jpg
-  picAlt: "Cute Anonymous_ikm"
-  job: Aspiring hackers
-  # aboutme: /Notion # comment this out if you don't need the 'about' page.
+github:
+  username: JiminChip
 
-navigation_categories:
-  - CTF
-  - Tech
+social:
+  name: Jimin Jeong
+  email: jjm4043@gmail.com
+  links:
+    - https://github.com/JiminChip
+    - https://dreamhack.io/users/25740
+
+avatar: "/assets/img/profile.jpg"
+toc: true
+
+paginate: 10
+permalink: /posts/:title/
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: false
+      toc: true
+  - scope:
+      path: "CTF"
+    values:
+      toc: true
+  - scope:
+      path: ""
+      type: tabs
+    values:
+      layout: page
+      permalink: /:title/
+
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+
+# Preserve line breaks in highlighted code blocks. Chirpy's HTML compressor
+# otherwise collapses the contents of <pre> elements into a single line.
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: true
+  ignore:
+    envs: [development]
+
+plugins:
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-archives
+  - jekyll-sitemap
+  - jekyll-include-cache
+
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
 
 exclude:
   - README.md
   - LICENSE
-  - github
-
-defaults:
-  - scope:
-      path: "_posts"
-      type: posts
-    values:
-      layout: post
-      comment: true   
-
-collections:
-  additional_pages:
-    output: true
-
-markdown_ext: "markdown,mkdown,mkdn,mkd,md"
-markdown: kramdown 
-
-# Filtering Content
-show_drafts: null
-limit_posts: 0
-future:      false
-unpublished: false
+  - Gemfile.lock
+  - _additional_pages
+  - _site
+  - Notion.md

@@ -1,0 +1,16 @@
+{% comment %}
+  Determine TOC state and return it through variable "enable_toc".
+  Standalone child write-ups use `parent_url`; their rendered headings are not
+  available through `page.content` at this point in Chirpy's layout pipeline.
+{% endcomment %}
+
+{% assign enable_toc = false %}
+{% if site.toc %}
+  {% if page.parent_url %}
+    {% assign enable_toc = true %}
+  {% elsif page.toc %}
+    {% if page.content contains '<h2' or page.content contains '<h3' %}
+      {% assign enable_toc = true %}
+    {% endif %}
+  {% endif %}
+{% endif %}

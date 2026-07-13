@@ -1,0 +1,35 @@
+<!-- Display the post's reading time. `read_time` in a post's front matter
+     overrides the automatic estimate. -->
+
+{% assign words = include.content | strip_html | number_of_words: 'auto' %}
+{% assign wpm = page.read_time_wpm | default: site.read_time_wpm | default: 180 %}
+{% assign min_time = 1 %}
+{% assign calculated_read_time = words | divided_by: wpm %}
+
+{% unless calculated_read_time > 0 %}
+  {% assign calculated_read_time = min_time %}
+{% endunless %}
+
+{% assign read_time = page.read_time | default: calculated_read_time %}
+
+{% capture read_prompt %}
+  {{- site.data.locales[include.lang].post.read_time.prompt -}}
+{% endcapture %}
+
+<span
+  class="readtime"
+  data-bs-toggle="tooltip"
+  data-bs-placement="bottom"
+  title="{% if page.read_time %}Reading time set by author{% else %}{{ words }} {{ site.data.locales[include.lang].post.words }}{% endif %}"
+>
+  <em>
+    {{- read_time -}}
+    {{ ' ' }}
+    {{- site.data.locales[include.lang].post.read_time.unit -}}
+  </em>
+  {%- if include.prompt -%}
+    {%- assign _prompt_words = read_prompt | number_of_words: 'auto' -%}
+    {%- unless _prompt_words > 1 -%}{{ ' ' }}{%- endunless -%}
+    {{ read_prompt }}
+  {%- endif -%}
+</span>

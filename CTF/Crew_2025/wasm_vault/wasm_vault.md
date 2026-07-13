@@ -1,16 +1,16 @@
 ---
 layout: post
+toc: true
 title: Wasm Vault
 date: November 3, 2025
+read_time: 5
 categories: CTF
+tags: [wasm, obfuscation]
+parent_url: /posts/Crew_CTF_2025/
+parent_title: Crew CTF 2025
+media_subpath: /CTF/Crew_2025/wasm_vault
 comment: true
 ---
-
-**상위 포스트 -** [Crew CTF 2025](/2025-11/Crew_CTF_2025)
-
----
-
-
 ## Overview
 
 This challenge was about **WASM(WebAssembly)** reversing, but the target wasm binary was **obfuscated.**

@@ -1,15 +1,16 @@
 ---
 layout: post
+toc: true
 title: An Android Applekation
 date: December 9, 2024
+read_time: 3
 categories: CTF
+tags: [apk, auto-analysis]
+parent_url: /posts/LakeCTF2024/
+parent_title: Lake CTF 24-25 Quals
+media_subpath: /CTF/Lake%20CTF%202024/android
 comment: true
 ---
-
-**Parent post:** [Lake CTF 24-25 Quals](/2024-12/LakeCTF2024)
-
----
-
 Decompiling the application with `jadx` reveals the following code:
 
 ```java

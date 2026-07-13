@@ -1,14 +1,16 @@
 ---
 layout: post
+toc: true
 title: OORM
 date: October 14, 2024
+read_time: 8
 categories: CTF
+tags: [obfuscation, auto-analysis]
+parent_url: /posts/bwctf_2024/
+parent_title: Blue Water CTF 2024
+media_subpath: /CTF/bwctf%202024
 comment: true
 ---
-**Parent post:** [Blue Water CTF 2024](/2024-10/bwctf_2024)
-
----
-
 [main.zip](main.zip)
 
 ## Table of Content

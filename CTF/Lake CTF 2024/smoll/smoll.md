@@ -1,15 +1,16 @@
 ---
 layout: post
+toc: true
 title: a-smoll-rev
 date: December 9, 2024
+read_time: 6
 categories: CTF
+tags: [obfuscation]
+parent_url: /posts/LakeCTF2024/
+parent_title: Lake CTF 24-25 Quals
+media_subpath: /CTF/Lake%20CTF%202024/smoll
 comment: true
 ---
-
-**Parent post:** [Lake CTF 24-25 Quals](/2024-12/LakeCTF2024)
-
----
-
 **Index**
 
 [Get Binary from Base64](#get-binary-from-base64)

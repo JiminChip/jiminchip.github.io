@@ -1,15 +1,15 @@
 ---
 layout: post
+toc: true
 title: n1vm
 date: November 3, 2025
+read_time: 8
 categories: CTF
+parent_url: /posts/N1CTF_2025/
+parent_title: N1CTF 2025
+media_subpath: /CTF/n1ctf_2025/n1vm
 comment: true
 ---
-
-**상위 포스트 -** [N1CTF 2025](/2025-11/N1CTF_2025)
-
----
-
 ## Overview
 
 This challenge required dealing with obfuscation techniques designed to hinder decompilation. In particular, the method used to conceal conditional branches by hiding the state of the **EFLAGS** register was quite fascinating. Even though many players manged to solve it, it’s still very interesting. Let’s get into the write-up.

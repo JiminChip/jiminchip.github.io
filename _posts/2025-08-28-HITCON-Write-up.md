@@ -1,6 +1,8 @@
 ---
 title: HITCON 2025 Write-Up
+read_time: 10
 categories: CTF
+tags: [write-up, heap-exploit, hooking, birthday-attack]
 comment: true
 ---
 

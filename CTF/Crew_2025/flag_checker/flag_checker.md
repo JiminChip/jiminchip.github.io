@@ -1,15 +1,16 @@
 ---
 layout: post
+toc: true
 title: Flag Checker
 date: November 3, 2025
+read_time: 15
 categories: CTF
+tags: [obfuscation]
+parent_url: /posts/Crew_CTF_2025/
+parent_title: Crew CTF 2025
+media_subpath: /CTF/Crew_2025/flag_checker
 comment: true
 ---
-
-**상위 포스트 -** [Crew CTF 2025](/2025-11/Crew_CTF_2025)
-
----
-
 ## Overview
 
 ![image.png](image.png)

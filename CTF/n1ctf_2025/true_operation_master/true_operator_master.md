@@ -1,15 +1,15 @@
 ---
 layout: post
+toc: true
 title: True Operator Matser
 date: November 3, 2025
+read_time: 15
 categories: CTF
+parent_url: /posts/N1CTF_2025/
+parent_title: N1CTF 2025
+media_subpath: /CTF/n1ctf_2025/true_operation_master
 comment: true
 ---
-
-**상위 포스트 -** [N1CTF 2025](/2025-11/N1CTF_2025)
-
----
-
 ## Overview
 
 ![image.png](image.png)

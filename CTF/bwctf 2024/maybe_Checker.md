@@ -1,12 +1,15 @@
 ---
 layout: post
+toc: true
 title: maybe Checker
 date: October 14, 2024
+read_time: 4
 categories: CTF
+tags: [z3, auto-analysis]
+parent_url: /posts/bwctf_2024/
+parent_title: Blue Water CTF 2024
+media_subpath: /CTF/bwctf%202024
 comment: true
----
-**Parent post:** [Blue Water CTF 2024](/2024-10/bwctf_2024)
-
 ---
 [maybe_checker.zip](maybe_checker.zip)
 
