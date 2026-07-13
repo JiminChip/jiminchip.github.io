@@ -6,7 +6,7 @@ timezone: Asia/Seoul
 title: mini-chip
 tagline: Aspiring hackers
 description: >-
-  CTF write-ups and technical notes on reverse engineering, binary analysis, and low-level systems.
+  CTF write-ups, security rabbit holes, and notes from whatever I'm learning next.
 
 url: "https://mini-chip.kr"
 baseurl: ""
