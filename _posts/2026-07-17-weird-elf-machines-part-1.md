@@ -1,7 +1,7 @@
 ---
 title: "Weird ELF Machines (Part 1): Relocation Abuse for Arbitrary Writes and Calls"
 date: 2026-07-17 00:00:00 +0900
-description: How ELF relocation metadata becomes a loader-driven machine for arbitrary writes and relocation-time calls before main.
+description: How ELF relocation metadata becomes a loader-driven machine for arbitrary writes and relocation-time calls before entry point.
 read_time: 16
 image:
   path: /assets/img/post-covers/weird-elf-machines-part-1.png
