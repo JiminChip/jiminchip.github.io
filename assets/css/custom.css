@@ -16,24 +16,39 @@ article > header .post-meta > .d-flex {
   justify-content: flex-end !important;
 }
 
-/* Keep CTF logos intact while using a narrow, full-height image rail. */
-#post-list img[src*='/assets/img/post-covers/'] {
-  object-fit: contain;
+/* Let cover images fill the card rail without distorting their aspect ratio. */
+#post-list .preview-img img {
+  object-fit: cover;
+  object-position: center;
+}
+
+#post-list img[src$='/assets/img/post-covers/weird-elf-machines-part-1.png'] {
+  transform: scale(1.35);
+  transform-origin: center;
 }
 
 @media (min-width: 768px) {
   #post-list .post-preview > .col-md-5 {
     width: 20%;
-    aspect-ratio: 1;
-    align-self: center;
+    max-width: 20%;
+    flex: 0 0 20%;
+    align-self: stretch;
+    display: flex;
   }
 
   #post-list .post-preview > .col-md-5 .preview-img {
-    aspect-ratio: 1;
+    aspect-ratio: auto;
+    height: 100%;
   }
 
   #post-list .post-preview > .col-md-7 {
-    width: 80%;
+    width: 100%;
+  }
+
+  #post-list .post-preview > .col-md-5 + .col-md-7 {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 0;
   }
 }
 
