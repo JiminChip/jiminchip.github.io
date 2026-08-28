@@ -55,6 +55,8 @@ kramdown:
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     css_class: highlight
+    block:
+      line_numbers: true
 
 # Preserve line breaks in highlighted code blocks. Chirpy's HTML compressor
 # otherwise collapses the contents of <pre> elements into a single line.

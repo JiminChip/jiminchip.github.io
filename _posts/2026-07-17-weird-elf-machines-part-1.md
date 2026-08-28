@@ -38,7 +38,7 @@ The interesting part is the relocation step. The host binary has not started yet
 - relocation entries behave like memory-write instructions.
 - symbol table entries can behave like values, pointers, or register-like state.
 
-This series is my attempt to work through that idea from the primitive level up to a practical packer implementation. Part 1 and Part 2 stay close to the loader primitives. Later parts will move into the engineering side.
+This series is my attempt to work through that idea from isolated loader primitives to concrete ELF constructions.
 
 In this first post, I want to focus on two primitives:
 
@@ -423,8 +423,6 @@ Part 1 has a simple takeaway: relocation is a normal loader feature, but it can 
 By controlling `r_offset`, `r_addend`, symbol metadata, and relocation types, we get arbitrary address write behavior. By combining `GLOB_DAT` with unresolved `STT_GNU_IFUNC` symbol resolution, we also get a relocation-time arbitrary address call primitive.
 
 This is why ELF metadata is such a good fit for the weird-machine framing. The executable code section does not have to change for loader behavior to change. **Metadata alone** can make `ld.so` perform meaningful work before `main()`.
-
-In the next part, I will go one layer deeper and treat the relocation table more explicitly as an instruction stream. The main topics will be self-modifying relocations and using symbol metadata as register-like state. The actual packer implementation comes later, after the primitive model is clear.
 
 ## References
 
